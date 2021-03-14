@@ -269,7 +269,7 @@ begin
 end; 
 
 
-finalization  // in case if library was not unloaded.
-am_unload;
+// finalization  
+// am_unload;
 
 end.

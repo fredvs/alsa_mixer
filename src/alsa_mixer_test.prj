@@ -779,8 +779,8 @@ findhistory=20
  TTimespec
 findoptions=1
 editpos=2
- 0,0
- 5,268
+ 0,-1073741823
+ 0,271
 bookmarks0=0
 bookmarks1=0
 sourcefiles=2
@@ -800,7 +800,7 @@ nomenumodules=0
 firsttab=0
 index=1
 [layout]
-windowlayout=603
+windowlayout=573
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1289,8 +1289,9 @@ windowlayout=603
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/alsa_mixer/src/mixer.inc
- history=50
+ value=/home/fred/alsa_mixer/src/alsa_mixer.pas
+ history=20
+  /home/fred/alsa_mixer/src/alsa_mixer.pas
   /home/fred/alsa_mixer/src/volumecontrol.c
   /home/fred/alsa_mixer/src/mixer.inc
   /home/fred/msecustcombo/msedispwidgets.pas
@@ -1310,37 +1311,6 @@ windowlayout=603
   /home/fred/WavvieW/src/uos_portaudio.pas
   /home/fred/WavvieW/src/msesigfftgui.pas
   /home/fred/WavvieW/src/main.pas
-  /home/fred/WavvieW/src/about.pas
-  /home/fred/WavvieW/src/msefftw.pas
-  /home/fred/WavvieW/src/uos_msefftw.pas
-  /home/fred/WavvieW/src/wavview.pas
-  /home/fred/WavvieW_pr/src/wavview.pas
-  /home/fred/WavvieW/src/uos_msesigaudionew.pas
-  /home/fred/WavvieW/src/msesignal.pas
-  /home/fred/WavvieW/src/uos_msesignal.pas
-  /home/fred/NoiseGenerator/src/msesignal.pas
-  /home/fred/noisegenerator/src/noisegenerator.pas
-  /home/fred/noisegenerator/mseaudiouos.pas
-  /home/fred/uos/examples/consolesynth.pas
-  /home/fred/mseuniverse/samples/signal/noisegen/mseaudiouos.pas
-  /home/fred/mseuniverse/samples/signal/noisegen/msesigaudiouos.pas
-  /home/fred/mseuniverse/samples/signal/noisegen/uos_portaudio.pas
-  /home/fred/uos/src/uos_portaudio.pas
-  /home/fred/mseuniverse/samples/signal/noisegen/msesigaudio.pas
-  /home/fred/mseuniverse/samples/signal/noisegen/mseaudio.pas
-  /home/fred/Downloads/Oscilloscope-no_timer_branch/source/3rdParty/uos/define.inc
-  /home/fred/Downloads/Oscilloscope-no_timer_branch_moi/source/3rdParty/uos/uos.pas
-  /home/fred/Downloads/Oscilloscope-no_timer_branch/source/Oscilloscope.lpr
-  /home/fred/Downloads/Oscilloscope-no_timer_branch/source/ouosdatacollector.pas
-  /home/fred/Downloads/Oscilloscope-no_timer_branch/source/obassdatacollector.pas
-  /home/fred/Downloads/Oscilloscope-main/source/3rdParty/uos/uos.pas
-  /home/fred/Oscilloscope/source/odatacollector.pas
-  /home/fred/Oscilloscope/source/obassdatacollector.pas
-  /home/fred/uos/examples/simplerecorder_fpGUI.pas
-  /home/fred/Oscilloscope/source/ospectrumframe.pas
-  /home/fred/uos/modifiedLGPL.txt
-  /home/fred/Oscilloscope/source/3rdParty/uos/uos_flat.pas
-  /home/fred/Oscilloscope/source/3rdParty/uos/uos.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
