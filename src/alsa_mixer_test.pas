@@ -22,7 +22,7 @@ var
 				       mask: cuint): cint; cdecl;
   begin
    writeln();
-   writeln('Yep, this is the callback, mixer-elem has changed');
+   writeln('Yep, this is the callback, mixer-elem has changed...');
    writeln('New Volume left = ' + IntToStr(ALSAmixerGetVolume(0)) + '/100');
    writeln('New Volume right = ' + IntToStr(ALSAmixerGetVolume(1)) + '/100');
   end;

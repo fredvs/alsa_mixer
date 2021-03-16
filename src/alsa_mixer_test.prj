@@ -789,8 +789,8 @@ findhistory=20
  snd_mixer_selem_id_set_index
 findoptions=1
 editpos=5
- 0,72
- 0,0
+ 0,24
+ 0,259
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -871,7 +871,7 @@ windowlayout=579
  rcy=0
  wsize=0
  active=0
- visible=1
+ visible=0
  [threadsfo]
  splitdir=0
  useroptions=268451945

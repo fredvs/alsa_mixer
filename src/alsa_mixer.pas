@@ -115,9 +115,6 @@ type
   end;
   
   TCallbackThread = class(TThread)
-    private
-      fStatusText : string;
-      //procedure ShowStatus;
     protected
       procedure Execute; override;
     public
@@ -160,7 +157,8 @@ var
 
   ReferenceCounter: integer = 0;  // Reference counter
   
-  hmixcallback : Psnd_mixer_t;				  
+  hmixcallback : Psnd_mixer_t;
+  thecallback: snd_mixer_elem_callback_t;				  
 
 function ALSAmixerGetVolume(chan:integer): integer; // chan 0 = left, chan 1 = right
 
@@ -243,9 +241,25 @@ constructor TCallbackThread.Create(CreateSuspended : boolean);
   
 procedure TCallbackThread.Execute;
   var
-    i : integer;
-  begin
-     while (not Terminated) do
+   sid : Psnd_mixer_selem_id_t;
+   elem : Psnd_mixer_elem_t;
+   i : integer;
+begin
+  if am_Handle = DynLibs.NilHandle then am_Load;       // load the library 
+  
+  snd_mixer_open(@hmixcallback,0); 
+  snd_mixer_attach(hmixcallback, 'default');
+  snd_mixer_selem_register(hmixcallback, nil, nil);
+  
+  snd_mixer_load(hmixcallback);
+ 
+  snd_mixer_selem_id_malloc(@sid);
+  snd_mixer_selem_id_set_index(sid, 0);
+  snd_mixer_selem_id_set_name(sid, 'Master');
+  elem := snd_mixer_find_selem(hmixcallback, sid);
+  snd_mixer_elem_set_callback(elem, thecallback);
+ 
+  while (not Terminated) do
       begin
           i := snd_mixer_wait(hmixcallback, -1); 
           if i >= 0 then snd_mixer_handle_events(hmixcallback);
@@ -358,31 +372,10 @@ var
    elem : Psnd_mixer_elem_t;
    i : integer;
 begin
-  am_Load;       // load the library 
-  
-  snd_mixer_open(@hmixcallback,0); 
-  snd_mixer_attach(hmixcallback, 'default');
-  snd_mixer_selem_register(hmixcallback, nil, nil);
-  
-  //snd_mixer_set_callback(hmixcallback, callback);
-   
-   snd_mixer_load(hmixcallback);
- 
- //  {
-  snd_mixer_selem_id_malloc(@sid);
-  snd_mixer_selem_id_set_index(sid, 0);
-  snd_mixer_selem_id_set_name(sid, 'Master');
-  elem := snd_mixer_find_selem(hmixcallback, sid);
-  snd_mixer_elem_set_callback(elem, callback);
-  // }
-  
-   CallbackThread := TCallbackThread.Create(True); 
-   CallbackThread.Start;
- 
- // snd_mixer_close(hmixcallback);
- // if CloseLib then
- // am_unload;  // Unload library if param CloseLib is true
-end;
+     thecallback := callback;
+     CallbackThread := TCallbackThread.Create(True); 
+     CallbackThread.Start;
+ end;
 
  finalization  
  
