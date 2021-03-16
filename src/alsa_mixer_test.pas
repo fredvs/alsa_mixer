@@ -1,29 +1,38 @@
 program alsa_mixer_test;
 
 uses
+  {$ifdef unix}
+  cthreads,
+  cmem, {$endif}
   SysUtils,
   CTypes,
   alsa_mixer;
 
 var
   volleft, volright: integer;
-
+  
+  {
   function mixcallback(ctl: Psnd_mixer_t; mask: cuint; elem: Psnd_mixer_elem_t): cint; cdecl;
   begin
     writeln('Yep, this is the callback, mixer has changed');
   end;
+  }
+  
+ function mixelemcallback(elem: Psnd_mixer_elem_t;
+				       mask: cuint): cint; cdecl;
+  begin
+   writeln();
+   writeln('Yep, this is the callback, mixer-elem has changed');
+   writeln('New Volume left = ' + IntToStr(ALSAmixerGetVolume(0)) + '/100');
+   writeln('New Volume right = ' + IntToStr(ALSAmixerGetVolume(1)) + '/100');
+  end;
 
 begin
-
-  writeln('Set Callback.');
-  writeln();
-
-  ALSAmixerSetCallBack(@mixcallback); // Dont work well yet...
 
   writeln();
   writeln('Begin session.');
   writeln();
-  //{
+  
   volleft  := ALSAmixerGetVolume(0);
   volright := ALSAmixerGetVolume(1);
 
@@ -34,31 +43,30 @@ begin
   sleep(300);
 
   ALSAmixerSetVolume(0, 25);
-  ALSAmixerSetVolume(1, 25);
+  ALSAmixerSetVolume(1, 55);
 
   writeln('New Volume left = ' + IntToStr(ALSAmixerGetVolume(0)) + '/100');
   writeln('New Volume right = ' + IntToStr(ALSAmixerGetVolume(1)) + '/100');
   
-  sleep(1500);
+  sleep(1000);
 
   writeln();
-
+ 
   ALSAmixerSetVolume(0, volleft);
   ALSAmixerSetVolume(1, volright);
-  
- 
+   
   writeln('Back to original Volume left = ' + IntToStr(ALSAmixerGetVolume(0)) + '/100');
   writeln('Back to original Volume right = ' + IntToStr(ALSAmixerGetVolume(1)) + '/100');
-  //}
-  writeln();
   
-  sleep(300);
-  
-  writeln('Change volume from mixer-system to fire the callback...');  // not yet working
   writeln();
+    
+  writeln('Change volume from mixer-system to fire the callback...'); 
   writeln('Press a key to quit.');
-
+  
+  ALSAmixerSetCallBack(@mixelemcallback); 
   readln;
+
+  writeln('Bye bye...');
 
 end.
 

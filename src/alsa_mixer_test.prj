@@ -86,8 +86,8 @@ finddialog=8
  value=0
  [finddialogfo]
  stackedunder=
- x=621
- y=496
+ x=614
+ y=621
  cx=234
  cy=269
 replacedialog=15
@@ -255,7 +255,7 @@ makeoptions=7
  -FE.
  -FUunits
  -B
- -O2 -XX -Xs -CX
+ -XX -Xs -CX
  -vewnhibq
 makeoptpurpose=7
  Define Object Pascal
@@ -725,7 +725,7 @@ on=1
 path=1
  /home/fred/alsa_mixer/src/alsa_mixer_test.pas
 line=1
- 57
+ 63
 address=1
  0
 addbkpt=1
@@ -765,14 +765,15 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=214
-finddtext=callback
+finddtext=snd_mixer_elem_callback_t
 findhistory=20
+ snd_mixer_elem_callback_t
+ snd_mixer_set_callback
  callback
  Psnd_mixer_elem_t
  Psnd_mixer_t
  snd_mixer_handle_events
  snd_mixer_callback_t
- snd_mixer_set_callback
  set_playback_volume
  snd_mixer_selem_channel_id_t
  snd_mixer_selem_get_playback_volume
@@ -786,11 +787,10 @@ findhistory=20
  snd_mixer_find_selem
  snd_mixer_selem_id_set_name
  snd_mixer_selem_id_set_index
- snd_mixer_load
 findoptions=1
 editpos=5
- 64,39
- 0,-1073741823
+ 0,72
+ 0,0
  0,-1073741823
  0,-1073741823
  0,-1073741823
