@@ -20,7 +20,7 @@ order17=0
 [projectoptions]
 projectdir=/home/fred/alsa_mixer/src
 projectfilename=/home/fred/alsa_mixer/src/alsa_mixer_test.prj
-findinfiledialog=57
+findinfiledialog=60
  [findinfileadialogfo.subdirs]
  value=1
  [findinfileadialogfo.incurrentfile]
@@ -42,7 +42,7 @@ findinfiledialog=57
  [findinfileadialogfo.dir]
  filenamescust=0
  filenames=1
-  /home/fred/freepascal-ootb_322test/
+  /home/fred/mseide-msegui/
  filecolwidth=150
  x=0
  y=0
@@ -58,14 +58,17 @@ findinfiledialog=57
  coldatewidth=126
  splitterplaces=243
  splitterlateral=126
- filehistory=2
+ filehistory=3
+  /home/fred/mseide-msegui/
   /home/fred/freepascal-ootb_322test/
   /home/fred/uos/
  filefilterindex=0
  filefilter="*.pas" "*.pp" "*.inc"
  [findinfileadialogfo.findtext]
- value=fpnanosleep
- history=6
+ value=xflush
+ history=8
+  xflush
+  xflush()
   fpnanosleep
   timespec
   TTimeSpec
@@ -717,13 +720,20 @@ sigsettings=27
  30,30,T,F
 defaultmake=4
 [breakpoints]
-on=0
-path=0
-line=0
-address=0
-addbkpt=0
-ignore=0
-condition=0
+on=1
+ 0
+path=1
+ /home/fred/alsa_mixer/src/alsa_mixer_test.pas
+line=1
+ 49
+address=1
+ 0
+addbkpt=1
+ 0
+ignore=1
+ 0
+condition=1
+ 
 panels=1
  panel1
 units=
@@ -755,8 +765,14 @@ envvarons=0
 [edit]
 hintwidth=462
 hintheight=214
-finddtext=set_playback_volume
+finddtext=callback
 findhistory=20
+ callback
+ Psnd_mixer_elem_t
+ Psnd_mixer_t
+ snd_mixer_handle_events
+ snd_mixer_callback_t
+ snd_mixer_set_callback
  set_playback_volume
  snd_mixer_selem_channel_id_t
  snd_mixer_selem_get_playback_volume
@@ -771,25 +787,34 @@ findhistory=20
  snd_mixer_selem_id_set_name
  snd_mixer_selem_id_set_index
  snd_mixer_load
- snd_mixer_selem_register
- snd_mixer_open
- while
- fpnanosleep
- timespec
- TTimespec
 findoptions=1
-editpos=2
+editpos=5
+ 0,21
+ 0,349
+ 0,60
  0,-1073741823
- 0,271
+ 0,-1073741823
 bookmarks0=0
 bookmarks1=0
-sourcefiles=2
+bookmarks2=0
+bookmarks3=0
+bookmarks4=0
+sourcefiles=5
  ${PROJECTDIR}/alsa_mixer_test.pas
  ${PROJECTDIR}/alsa_mixer.pas
-relpaths=2
+ /home/fred/Downloads/fpalsa-1.0.27.2.fp0/src/mixer.inc
+ /home/fred/alsa_sound/src/alsa_sound.pas
+ /home/fred/strumpract/src/uos_portaudio.pas
+relpaths=5
  alsa_mixer_test.pas
  alsa_mixer.pas
-ismoduletexts=2
+ ../Downloads/fpalsa-1.0.27.2.fp0/src/mixer.inc
+ alsa_sound/src/alsa_sound.pas
+ strumpract/src/uos_portaudio.pas
+ismoduletexts=5
+ 0
+ 0
+ 0
  0
  0
 modules=0
@@ -797,10 +822,16 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
+order=5
+ 0
+ 1
+ 4
+ 2
+ 3
 firsttab=0
-index=1
+index=0
 [layout]
-windowlayout=573
+windowlayout=579
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -840,7 +871,7 @@ windowlayout=573
  rcy=0
  wsize=0
  active=0
- visible=0
+ visible=1
  [threadsfo]
  splitdir=0
  useroptions=268451945
@@ -934,7 +965,7 @@ windowlayout=573
  x=0
  y=0
  cx=205
- cy=528
+ cy=527
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1263,7 +1294,7 @@ windowlayout=573
  x=0
  y=0
  cx=1356
- cy=49
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1273,13 +1304,13 @@ windowlayout=573
  visible=1
  mdistate=0
  nx=0
- ny=-1
+ ny=-2
  ncx=1341
  ncy=0
  x=0
- y=-1
- cx=1341
- cy=-2
+ y=-2
+ cx=1356
+ cy=0
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1289,9 +1320,15 @@ windowlayout=573
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/alsa_mixer/src/alsa_mixer.pas
+ value=/home/fred/alsa_mixer/src/alsa_mixer_test.pas
  history=20
   /home/fred/alsa_mixer/src/alsa_mixer.pas
+  /home/fred/alsa_mixer/src/alsa_mixer_test.pas
+  /home/fred/alsa_sound/src/alsa_sound.pas
+  /home/fred/Downloads/fpalsa-1.0.27.2.fp0/src/mixer.inc
+  /home/fred/strumpract/src/msex11gdi.pas
+  /home/fred/WavvieW/src/msex11gdi.pas
+  /home/fred/WavvieW/src/mseguiintf.pas
   /home/fred/alsa_mixer/src/volumecontrol.c
   /home/fred/alsa_mixer/src/mixer.inc
   /home/fred/msecustcombo/msedispwidgets.pas
@@ -1305,12 +1342,6 @@ windowlayout=573
   /home/fred/WavvieW/src/msesignoise.pas
   /home/fred/uos/examples/uos.pas
   /home/fred/uossawtooth2/examples/uos.pas
-  /home/fred/uos/src/uos.pas
-  /home/fred/uossawtooth/src/uos.pas
-  /home/fred/uossawtooth/src/uos_cdrom.pas
-  /home/fred/WavvieW/src/uos_portaudio.pas
-  /home/fred/WavvieW/src/msesigfftgui.pas
-  /home/fred/WavvieW/src/main.pas
  [debuggerfo.project_options]
  value=1
  [debuggerfo.hints]
@@ -1328,12 +1359,18 @@ windowlayout=573
  x=208
  y=0
  cx=1148
- cy=528
+ cy=527
  rcx=0
  rcy=0
  [sourcefo.files_tab]
+ order=5
+  0
+  1
+  4
+  2
+  3
  firsttab=0
- index=1
+ index=0
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
@@ -1369,9 +1406,9 @@ windowlayout=573
  ncx=0
  ncy=0
  x=0
- y=52
+ y=53
  cx=1356
- cy=528
+ cy=527
  rcx=0
  rcy=0
 [targetconsole]

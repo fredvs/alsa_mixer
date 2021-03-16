@@ -17,30 +17,38 @@ uses
   dynlibs,
   CTypes;
   
-function ALSAmixerGetVolume(chan:integer): integer; // chan 0 = left, chan 1 = right
-
-procedure ALSAmixerSetVolume(chan, volume :integer); // chan 0 = left, chan 1 = right volume
-                                                     // volume from 0 to 100 
-
-implementation
-
 type
+
 (** Mixer handle *)
   PPsnd_mixer_t = ^Psnd_mixer_t;
   Psnd_mixer_t = ^snd_mixer_t;
   snd_mixer_t = record
   end;
-(** Mixer elements class handle *)
-  PPsnd_mixer_class_t = ^Psnd_mixer_class_t;
-  Psnd_mixer_class_t = ^snd_mixer_class_t;
-  snd_mixer_class_t = record
-  end;
-(** Mixer element handle *)
+ (** Mixer element handle *)
   PPsnd_mixer_elem_t = ^Psnd_mixer_elem_t;
   Psnd_mixer_elem_t = ^snd_mixer_elem_t;
   snd_mixer_elem_t = record
   end;
   
+  (** 
+ * \brief Mixer callback function
+ * \param mixer Mixer handle
+ * \param mask event mask
+ * \param elem related mixer element (if any)
+ * \return 0 on success otherwise a negative error code
+ *)
+ 
+ type
+  snd_mixer_callback_t = function(ctl: Psnd_mixer_t;
+				  mask: cuint;
+				  elem: Psnd_mixer_elem_t): cint; cdecl;
+
+(** Mixer elements class handle *)
+  PPsnd_mixer_class_t = ^Psnd_mixer_class_t;
+  Psnd_mixer_class_t = ^snd_mixer_class_t;
+  snd_mixer_class_t = record
+  end;
+   
 (** Mixer simple element channel identifier *)
 type
   snd_mixer_selem_channel_id_t = (
@@ -95,7 +103,7 @@ type
   Psnd_mixer_selem_id_t = ^snd_mixer_selem_id_t;
   snd_mixer_selem_id_t = record
   end;
-  
+    
 // Dynamic load : Vars that will hold our dynamically loaded ALSA methods...
 var
   snd_mixer_open: function(mixer: PPsnd_mixer_t; mode: cint): cint; cdecl; 
@@ -116,12 +124,27 @@ var
   snd_mixer_selem_set_playback_volume_all: function(elem: Psnd_mixer_elem_t; value: clong): cint; cdecl;
   snd_mixer_selem_set_playback_volume: function(elem: Psnd_mixer_elem_t;
    channel: snd_mixer_selem_channel_id_t; value: clong): cint; cdecl;
+   
+  snd_mixer_set_callback: procedure(obj: Psnd_mixer_t; val: snd_mixer_callback_t); cdecl;
+   
+  snd_mixer_handle_events: function(mixer: Psnd_mixer_t): cint; cdecl;
   
   snd_mixer_close: function(mixer: Psnd_mixer_t): cint; cdecl;
+
  // Special function for dynamic loading of lib ...
   am_Handle: TLibHandle = dynlibs.NilHandle; // this will hold our handle for the lib
 
   ReferenceCounter: integer = 0;  // Reference counter
+  
+  hmixcallback : Psnd_mixer_t;				  
+
+function ALSAmixerGetVolume(chan:integer): integer; // chan 0 = left, chan 1 = right
+
+procedure ALSAmixerSetVolume(chan, volume :integer); // chan 0 = left, chan 1 = right volume
+                                                     // volume from 0 to 100 
+procedure ALSAmixerSetCallBack(callback: snd_mixer_callback_t);
+
+implementation
   
 function am_IsLoaded: Boolean;
 begin
@@ -170,8 +193,12 @@ begin
         DynLibs.GetProcedureAddress(am_Handle, PChar('snd_mixer_selem_set_playback_volume'));
       Pointer(snd_mixer_close)      := 
         DynLibs.GetProcedureAddress(am_Handle, PChar('snd_mixer_close'));
-
-      Result           := am_IsLoaded;
+      Pointer(snd_mixer_set_callback)      := 
+        DynLibs.GetProcedureAddress(am_Handle, PChar('snd_mixer_set_callback'));
+      Pointer(snd_mixer_handle_events)      := 
+        DynLibs.GetProcedureAddress(am_Handle, PChar('snd_mixer_handle_events'));
+        
+         Result           := am_IsLoaded;
       ReferenceCounter := 1;
     end;
   end;
@@ -193,6 +220,14 @@ begin
 end;
 
 // ALSA methods:
+{
+function mixcallback(ctl: Psnd_mixer_t;
+				  mask: cuint;
+				  elem: Psnd_mixer_elem_t): cint; cdecl;
+begin
+writeln('Yep, mixer changed');
+end;	
+}			  
 
 function ALSAmixerGetVolume(chan:integer): integer; // chan 0 = left, chan 1 = right
 var
@@ -203,7 +238,7 @@ var
    min, max, vol: clong;
 begin
   Result := 0;
-  am_Load;       // load the library 
+  if am_Handle = DynLibs.NilHandle then am_Load;       // load the library 
   
   snd_mixer_open(@hmix,0); 
   snd_mixer_attach(hmix, 'default');
@@ -214,6 +249,7 @@ begin
   snd_mixer_selem_id_set_index(sid, 0);
   snd_mixer_selem_id_set_name(sid, 'Master');
   elem := snd_mixer_find_selem(hmix, sid);
+  
   snd_mixer_selem_get_playback_volume_range(elem, @min, @max);
  
   //writeln('min = ' + inttostr(min) + 'max = ' + inttostr(max));
@@ -226,11 +262,13 @@ begin
    result := round(vol/max*100);
  
   //snd_mixer_selem_set_playback_volume_all(elem, round(50 * max / 100));
-
+  
+   snd_mixer_handle_events(hmixcallback);
+ 
    snd_mixer_close(hmix);
       
   // if CloseLib then
-  am_unload;  // Unload library if param CloseLib is true
+  // am_unload;  // Unload library if param CloseLib is true
 end; 
 
 procedure ALSAmixerSetVolume(chan, volume :integer); // chan 0 = left, chan 1 = right volume
@@ -241,35 +279,71 @@ var
    elem : Psnd_mixer_elem_t;
    min, max: clong;
 begin
-  am_Load;       // load the library 
+  if am_Handle = DynLibs.NilHandle then am_Load;       // load the library 
   
   snd_mixer_open(@hmix,0); 
   snd_mixer_attach(hmix, 'default');
   snd_mixer_selem_register(hmix, nil, nil);
+ 
   snd_mixer_load(hmix);
   
   snd_mixer_selem_id_malloc(@sid);
   snd_mixer_selem_id_set_index(sid, 0);
   snd_mixer_selem_id_set_name(sid, 'Master');
   elem := snd_mixer_find_selem(hmix, sid);
+  
   snd_mixer_selem_get_playback_volume_range(elem, @min, @max);
  
-  //snd_mixer_selem_set_playback_volume_all(elem, round(volume * max / 100));
+  snd_mixer_selem_set_playback_volume_all(elem, round(volume * max / 100));
   
   if chan = 0 then snd_mixer_selem_set_playback_volume(elem, SND_MIXER_SCHN_FRONT_LEFT,
    round(volume * max / 100));
  
   if chan = 1 then snd_mixer_selem_set_playback_volume(elem, SND_MIXER_SCHN_FRONT_right,
    round(volume * max / 100));
+   
+   snd_mixer_handle_events(hmixcallback);
  
    snd_mixer_close(hmix);
       
   // if CloseLib then
-  am_unload;  // Unload library if param CloseLib is true
+  // am_unload;  // Unload library if param CloseLib is true
 end; 
 
+procedure ALSAmixerSetCallBack(callback: snd_mixer_callback_t );
+var
+   sid : Psnd_mixer_selem_id_t;
+   elem : Psnd_mixer_elem_t;
+begin
+  am_Load;       // load the library 
+  
+  snd_mixer_open(@hmixcallback,0); 
+  snd_mixer_attach(hmixcallback, 'default');
+  snd_mixer_selem_register(hmixcallback, nil, nil);
+  
+  snd_mixer_set_callback(hmixcallback, callback);
+   
+  snd_mixer_load(hmixcallback);
+  
+ // {
+  snd_mixer_selem_id_malloc(@sid);
+  snd_mixer_selem_id_set_index(sid, 0);
+  snd_mixer_selem_id_set_name(sid, 'Master');
+  elem := snd_mixer_find_selem(hmixcallback, sid);
+ // }
+  
+  snd_mixer_handle_events(hmixcallback);
+  
+ // snd_mixer_close(hmixcallback);
+      
+  // if CloseLib then
+ // am_unload;  // Unload library if param CloseLib is true
+end;
 
-// finalization  
-// am_unload;
+
+ finalization  
+
+ if assigned(hmixcallback) then snd_mixer_close(hmixcallback);
+ am_unload;
 
 end.
