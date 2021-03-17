@@ -788,33 +788,18 @@ findhistory=20
  snd_mixer_selem_id_set_name
  snd_mixer_selem_id_set_index
 findoptions=1
-editpos=5
- 1,0
- 0,171
- 0,-1073741823
- 0,-1073741823
- 0,-1073741823
+editpos=2
+ 0,13
+ 11,4
 bookmarks0=0
 bookmarks1=0
-bookmarks2=0
-bookmarks3=0
-bookmarks4=0
-sourcefiles=5
+sourcefiles=2
  ${PROJECTDIR}/alsa_mixer_test.pas
  ${PROJECTDIR}/alsa_mixer.pas
- /home/fred/Downloads/fpalsa-1.0.27.2.fp0/src/mixer.inc
- /home/fred/alsa_sound/src/alsa_sound.pas
- ${PROJECTDIR}/uos_portaudio.pas
-relpaths=5
+relpaths=2
  alsa_mixer_test.pas
  alsa_mixer.pas
- Downloads/fpalsa-1.0.27.2.fp0/src/mixer.inc
- alsa_sound/src/alsa_sound.pas
- strumpract/src/uos_portaudio.pas
-ismoduletexts=5
- 0
- 0
- 0
+ismoduletexts=2
  0
  0
 modules=0
@@ -822,16 +807,10 @@ moduleoptions=0
 visiblemodules=0
 nomenumodules=0
 [sourcefo.files_tab]
-order=5
- 0
- 1
- 3
- 4
- 2
 firsttab=0
-index=0
+index=1
 [layout]
-windowlayout=579
+windowlayout=573
  [mainfo.basedock]
  splitdir=2
  useroptions=268450944
@@ -1304,13 +1283,13 @@ windowlayout=579
  visible=1
  mdistate=0
  nx=0
- ny=-2
+ ny=-3
  ncx=1341
  ncy=0
  x=0
  y=-3
- cx=1341
- cy=1
+ cx=1356
+ cy=0
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1320,7 +1299,7 @@ windowlayout=579
  [debuggerfo.edit_compiler]
  value=Pascal
  [debuggerfo.file_history]
- value=/home/fred/alsa_mixer/src/alsa_mixer_test.pas
+ value=/home/fred/alsa_mixer/src/alsa_mixer.pas
  history=20
   /home/fred/alsa_mixer/src/alsa_mixer_test.pas
   /home/fred/alsa_mixer/src/alsa_mixer.pas
@@ -1363,14 +1342,8 @@ windowlayout=579
  rcx=0
  rcy=0
  [sourcefo.files_tab]
- order=5
-  0
-  1
-  3
-  4
-  2
  firsttab=0
- index=0
+ index=1
  [confideufo.fontname]
  value=stf_default
  [confideufo.usedefaulteditoroptions]
