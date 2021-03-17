@@ -11,15 +11,7 @@ uses
 var
   volleft, volright: integer;
   
-  {
-  function mixcallback(ctl: Psnd_mixer_t; mask: cuint; elem: Psnd_mixer_elem_t): cint; cdecl;
-  begin
-    writeln('Yep, this is the callback, mixer has changed');
-  end;
-  }
-  
- function mixelemcallback(elem: Psnd_mixer_elem_t;
-				       mask: cuint): cint; cdecl;
+ procedure ACallback;
   begin
    writeln();
    writeln('Yep, this is the callback, mixer-elem has changed...');
@@ -63,7 +55,7 @@ begin
   writeln('Change volume from mixer-system to fire the callback...'); 
   writeln('Press a key to quit.');
   
-  ALSAmixerSetCallBack(@mixelemcallback); 
+  ALSAmixerSetCallBack(@ACallback); 
   readln;
 
   writeln('Bye bye...');

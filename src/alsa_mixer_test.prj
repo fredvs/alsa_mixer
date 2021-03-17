@@ -725,7 +725,7 @@ on=1
 path=1
  /home/fred/alsa_mixer/src/alsa_mixer_test.pas
 line=1
- 63
+ 55
 address=1
  0
 addbkpt=1
@@ -789,8 +789,8 @@ findhistory=20
  snd_mixer_selem_id_set_index
 findoptions=1
 editpos=5
- 0,24
- 0,259
+ 1,0
+ 0,171
  0,-1073741823
  0,-1073741823
  0,-1073741823
@@ -804,7 +804,7 @@ sourcefiles=5
  ${PROJECTDIR}/alsa_mixer.pas
  /home/fred/Downloads/fpalsa-1.0.27.2.fp0/src/mixer.inc
  /home/fred/alsa_sound/src/alsa_sound.pas
- /home/fred/strumpract/src/uos_portaudio.pas
+ ${PROJECTDIR}/uos_portaudio.pas
 relpaths=5
  alsa_mixer_test.pas
  alsa_mixer.pas
@@ -965,7 +965,7 @@ windowlayout=579
  x=0
  y=0
  cx=205
- cy=528
+ cy=527
  rcx=0
  rcy=0
  [projecttreefo.grid]
@@ -1294,7 +1294,7 @@ windowlayout=579
  x=0
  y=0
  cx=1356
- cy=49
+ cy=50
  rcx=0
  rcy=0
  [debuggerfo.basedock]
@@ -1308,9 +1308,9 @@ windowlayout=579
  ncx=1341
  ncy=0
  x=0
- y=-2
+ y=-3
  cx=1341
- cy=-2
+ cy=1
  rcx=0
  rcy=0
  [debuggerfo.edit_options]
@@ -1359,7 +1359,7 @@ windowlayout=579
  x=208
  y=0
  cx=1148
- cy=528
+ cy=527
  rcx=0
  rcy=0
  [sourcefo.files_tab]
@@ -1406,9 +1406,9 @@ windowlayout=579
  ncx=0
  ncy=0
  x=0
- y=52
+ y=53
  cx=1356
- cy=528
+ cy=527
  rcx=0
  rcy=0
 [targetconsole]
