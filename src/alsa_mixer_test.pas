@@ -3,9 +3,8 @@ program alsa_mixer_test;
 uses
   {$ifdef unix}
   cthreads,
-  cmem, {$endif}
+  {$endif}
   SysUtils,
-  CTypes,
   alsa_mixer;
 
 var
